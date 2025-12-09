@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import Layout from '@/views/Layout.vue';
 import Home from '@/views/Home.vue';
 import Detail from '@/views/ArticleDetail.vue';
@@ -9,6 +9,8 @@ import Register from '@/views/Register.vue';
 import MyArticles from '@/views/MyArticles.vue';
 import History from '@/views/History.vue';
 import MyFavorites from '@/views/MyFavorites.vue';
+import ArticleEdit from '@/views/ArticleEdit.vue';
+import ArticleAdd from '@/views/ArticleAdd.vue';
 
 const routes = [
   // 1. 登录页（放在这里，不要放在 Layout 里面！）
@@ -61,10 +63,24 @@ const routes = [
     component: MyFavorites, 
     meta: { title: '我的收藏' } 
   },
+  // 6. 文章编辑页
+  { 
+    path: '/article/edit/:id', 
+    component: ArticleEdit, 
+    meta: { title: '编辑文章' } 
+  },
+  // 7. AI 生成/发布页
+  { 
+    path: '/article/add', 
+    component: ArticleAdd, 
+    meta: { title: '发布文章' } 
+  },
+
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  // 使用 Hash 模式，并传入 base url，彻底解决刷新 404 问题
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes
 });
 

@@ -2,8 +2,8 @@ import axios from 'axios';
 import { showToast, showFailToast } from 'vant';
 import router from '@/router';
 
-const baseURL = '/api';
-const instance = axios.create({ baseURL, timeout: 5000 });
+const baseURL = import.meta.env.DEV ? '/api' : '';
+const instance = axios.create({ baseURL});
 
 // 请求拦截器
 instance.interceptors.request.use(

@@ -1,6 +1,16 @@
 <template>
   <div class="my-articles-page">
-    <van-nav-bar title="我的文章" left-arrow @click-left="$router.back()" fixed placeholder />
+    <van-nav-bar 
+      title="我的文章" 
+      left-arrow 
+      @click-left="$router.back()" 
+      fixed 
+      placeholder 
+    >
+      <template #right>
+        <van-icon name="plus" size="22" color="#333" @click="$router.push('/article/add')" />
+      </template>
+    </van-nav-bar>
     
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
@@ -24,8 +34,20 @@
               <span class="time">{{ formatTime(item.createTime) }}</span>
             </div>
           </div>
-          <div class="art-cover" v-if="item.coverImg">
-            <van-image :src="item.coverImg" fit="cover" radius="4" />
+          
+          <div class="right-box">
+             <div class="art-cover" v-if="item.coverImg">
+               <van-image :src="item.coverImg" fit="cover" radius="4" />
+             </div>
+             <van-button 
+               size="mini" 
+               plain 
+               type="primary" 
+               class="edit-btn"
+               @click.stop="$router.push(`/article/edit/${item.id}`)"
+             >
+               编辑
+             </van-button>
           </div>
         </div>
       </van-list>
@@ -50,8 +72,7 @@ const onLoad = async () => {
   }
   
   try {
-    // 关键点：调用 /article/listsearch 接口
-    // 后端会自动根据 Header 里的 Token 识别当前用户，只返回该用户的文章
+    // 调用 listsearch 接口获取我的文章列表
     const res = await request.get('/article/listsearch', { 
         params: { pageNum: pageNum.value, pageSize: 10 } 
     });
@@ -112,6 +133,7 @@ const formatTime = (time) => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  line-height: 1.4;
 }
 .art-meta {
   font-size: 12px;
@@ -121,13 +143,31 @@ const formatTime = (time) => {
   gap: 10px;
   margin-top: 10px;
 }
-.art-cover {
-  width: 110px;
-  height: 75px;
+
+/* 右侧布局样式 */
+.right-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 内容右对齐 */
+  justify-content: space-between;
+  width: 110px; /* 固定宽度，防止挤压左侧 */
   flex-shrink: 0;
+}
+
+.art-cover {
+  width: 100%;
+  height: 75px;
 }
 .art-cover :deep(.van-image) {
   width: 100%;
   height: 100%;
+  display: block;
+}
+
+.edit-btn {
+  padding: 0 15px;
+  height: 24px;
+  line-height: 22px;
+  margin-top: 8px; /* 与图片保持间距 */
 }
 </style>

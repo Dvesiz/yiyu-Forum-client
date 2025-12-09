@@ -155,6 +155,11 @@ onMounted(async () => {
   color: #333;
   overflow-x: hidden;
 }
+.cover-box{
+  margin-bottom: 20px; /* 20px */
+  overflow: hidden;
+  border-radius: 8px;
+}
 /* 处理内容中的图片自适应 */
 :deep(.art-content img) {
   max-width: 100%;

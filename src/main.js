@@ -9,13 +9,15 @@ import 'vant/lib/index.css'
 import { 
     Button, NavBar, Tabbar, TabbarItem, List, Cell, CellGroup, 
     Image as VanImage, PullRefresh, Icon, Tag, Loading, 
-    Search, Sticky, Tab, Tabs, Form, Field, Empty, Toast, Dialog 
+    Search, Sticky, Tab, Tabs, Form, Field, Empty, Toast, Dialog ,
+    Uploader, Popup, Picker,Notify
 } from 'vant'
 
 const app = createApp(App)
 
 // 3. 注册组件
 app.use(Button)
+app.use(Notify)
 app.use(NavBar)
 app.use(Tabbar)
 app.use(TabbarItem)
@@ -36,6 +38,9 @@ app.use(Field)
 app.use(Empty)     // <--- 修复: 注册空状态组件
 app.use(Toast)
 app.use(Dialog)
+app.use(Uploader) // <--- 注册
+app.use(Popup)    // <--- 注册
+app.use(Picker)
 
 app.use(router)
 
